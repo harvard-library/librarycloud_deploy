@@ -1,3 +1,7 @@
+# Set the SQS environment to be used. This prefix will be used for all
+# queues in the ingestion process
+
+$sqs_env = "test"
 
 # Install required packages
 
@@ -34,10 +38,9 @@ file { "/usr/local/librarycloud/src/main/resources/aws.properties":
 # TODO: Find a better way to do this
 
 file { "/usr/local/librarycloud/src/main/resources/librarycloud.env.properties": 
-	content => "librarycloud.files.basepath=/var/lib/librarycloud/files\nlibrarycloud.sqs.environment=test",
+	content => "librarycloud.files.basepath=/var/lib/librarycloud/files\nlibrarycloud.sqs.environment=$sqs_env",
 	ensure => "present",
 }
-
 
 # Install service
 
