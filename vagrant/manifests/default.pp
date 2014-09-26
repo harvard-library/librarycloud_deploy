@@ -14,9 +14,19 @@ package { "default-jdk": ensure => "installed" }
 file { [ 
 		 "/usr/local/librarycloud/", 
 		 "/var/lib/librarycloud", 
-		 "/var/lib/librarycloud/files"
+		 "/var/lib/librarycloud/files",
+		 "/var/lib/librarycloud/files/dropbox"
 		]:
     ensure => "directory",
+}
+
+file { [ 
+		 "/var/lib/librarycloud/files/dropbox"
+		 "/var/lib/librarycloud/files/ingest-alpha"
+		]:
+    ensure => "directory",
+    user => "ubuntu",
+    group => "ubuntu",
 }
 
 # Download code
