@@ -15,17 +15,16 @@ file { [
 		 "/usr/local/librarycloud/", 
 		 "/var/lib/librarycloud", 
 		 "/var/lib/librarycloud/files",
-		 "/var/lib/librarycloud/files/dropbox"
 		]:
     ensure => "directory",
 }
 
 file { [ 
-		 "/var/lib/librarycloud/files/dropbox"
-		 "/var/lib/librarycloud/files/ingest-alpha"
+		 "/var/lib/librarycloud/files/dropbox",
+		 "/var/lib/librarycloud/files/ingest-aleph",
 		]:
     ensure => "directory",
-    user => "ubuntu",
+    owner => "ubuntu",
     group => "ubuntu",
 }
 
@@ -48,7 +47,8 @@ file { "/usr/local/librarycloud/src/main/resources/aws.properties":
 # TODO: Find a better way to do this
 
 file { "/usr/local/librarycloud/src/main/resources/librarycloud.env.properties": 
-	content => "librarycloud.files.basepath=/var/lib/librarycloud/files\nlibrarycloud.sqs.environment=$sqs_env",
+	content => "librarycloud.files.basepath=/var/lib/librarycloud/files\nlibrarycloud.sqs.environment=$sqs_env\nsolr_url=http://ec2-54-172-18-87.compute-1.amazonaws.com:8983/solr/librarycloud
+",
 	ensure => "present",
 }
 
