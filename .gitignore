@@ -1,2 +1,4 @@
 vagrant/secure
+vagrant-api/secure
 vagrant/.vagrant
+vagrant-api/.vagrant

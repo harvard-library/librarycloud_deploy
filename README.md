@@ -1,7 +1,7 @@
 LibraryCloud Deployment
 =======================
 
-# Deploying a LibraryCloud server
+# Deploying a LibraryCloud ingestion server
 
 1) Create an aws.properties file with your AWS credentials:
 
