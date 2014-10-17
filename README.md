@@ -6,7 +6,7 @@ LibraryCloud Deployment
 
 1) Setup an AWS server with sufficient disk space to handle files to be loaded into LibraryCloud. A t2.small instance with 100GB of attached storage should be sufficient to start.
 
-2) Attach the disk, set permissions, add aand download code
+2) Attach the disk, set permissions, and download code
         
         lsblk
         sudo file -s /dev/xvdb
@@ -81,7 +81,7 @@ and place it at ```vagrant/secure/aws.properties```
 
 3) Wait for the servers to boot.
 
-4) For each data file, in ```/data/dropbox``` run the following command:
+4) For each data file in ```/data/dropbox``` run the following command:
 
         ~/librarycloud_ingest/util/ingest_aleph.sh [PATH_TO_MRC_FILE] [INTERNAL_IP_OF_AN_INGESTION_SERVER] [PRIVATE_KEY]
 
