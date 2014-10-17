@@ -1,5 +1,3 @@
-LibraryCloud Deployment
-=======================
 # Setting up a full LibraryCloud environment at AWS
 
 ## Deploy a control server
