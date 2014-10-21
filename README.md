@@ -25,6 +25,25 @@
         sudo useradd dropbox
         sudo chgrp -r /data/dropbox dropbox
 
+5) Install AWS tools
+
+        sudo yum install wget
+        wget https://bootstrap.pypa.io/get-pip.py
+        sudo python get-pip.py
+        sudo pip install awscli
+        git clone https://github.com/harvard-library/aws-tools.git
+
+6) Setup AWS credentials. Enter access key, secret access key, and region when prompted.
+
+        aws configure
+
+7) Ensure AWS credentials are set in the environment, and the path includes necessary tools.
+
+        export AWS_ACCESS_KEY_ID=<the access key>
+        export AWS_SECRET_ACCESS_KEY=<the secret access key>
+        export PATH=$PATH:~/aws-tools
+
+
 ## Deploy Search and API servers
 
 Follow [these instructions](https://github.com/harvard-library/librarycloud#solr-installation-on-clean-rhel-server)
