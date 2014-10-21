@@ -96,15 +96,9 @@ and place it at ```vagrant/secure/aws.properties```
 
 2) Create and launch an Auto-Scaling Group from the previously created Launch Configuration. Use the defaults and set the requested number of servers to 10.
 
-3) Wait for the servers to boot.
+3) For each data file in ```/data/dropbox``` to be ingested, run the following command:
 
-4) For each data file in ```/data/dropbox``` run the following command:
-
-        ~/librarycloud_ingest/util/ingest_aleph.sh [PATH_TO_MRC_FILE] [INTERNAL_IP_OF_AN_INGESTION_SERVER] [PRIVATE_KEY]
-
-Rotate among the servers when uploading the files, to spread the load amongst the different servers. _Note: Further testing is required to see how much of a difference this actually makes._
-
-_Another Note: The requirement to include the private key on the command line can potentially be removed in the future_
+        ~/librarycloud_ingest/util/ingest_aleph.sh [PATH_TO_MRC_FILE] test
 
 5) Wait for the ingestion to complete. Monitor progress by reviewing the SQS queues used in the environment (by default, the queues prefixed with ```test-```). When all queues except ```test-done``` and ```test-dead-letter``` are empty, the ingestion is complete.
 
