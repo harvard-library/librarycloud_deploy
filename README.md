@@ -60,7 +60,7 @@ You may need to allocate more disk for the solr index. Mount a new disk as per [
 and place it at ```vagrant/secure/aws.properties```
 
 2) Ensure that AWS credentials used in the Vagrantfile are available in your environment
-
+        
         export AWS_ACCESS_KEY_ID=your_access_key
         export AWS_SECRET_ACCESS_KEY=your_secret_access_key
         export AWS_PRIVATE_AWS_SSH_KEY_PATH=path_to_ssh_private_key_for_aws
@@ -107,14 +107,49 @@ and place it at ```vagrant/secure/aws.properties```
 # Ingest all data
 
 ## Preconditions
-Data is available on the control server as follw
+
+1) Data is available on the control server as follows
 
 Location | Description | Timing
 --- | --- | ---
 /data/dropbox/aleph/full|Full export of all Aleph data|Sunday am|
 /data/dropbox/aleph/incremental|Incremental Aleph updates|Monday 1pm, Wednesday 1pm|
 /data/dropbox/aleph/delete|Records removed from Aleph|Monday 1pm, Wednesday 1pm, Friday midnight|
-/data/dropbox/oasis/incremental|All OASIS files|Friday am|
+/data/dropbox/oasis/full|All OASIS files|Friday am|
+
+2) There is an AMI with the latest ingest code. If one does not exist, install the latest ingest code on a server, and create an AMI from the Control server:
+
+        aws ec2 create-image --instance-id INSTANCE_ID  --name "INGEST_AMI_NAME”
+
+## Run full ingest
+
+1) Login to the Control Server
+
+2) Kickoff aleph ingest - look only at data files less than a week old
+
+        find /data/dropbox/aleph/full -mtime -7 | xargs -L 1 ~/librarycloud_ingest/util/ingest.sh aleph test
+
+3) Kickoff OASIS ingest - look only at data files less than a week old. Process in parallel (there are many files)
+
+        find /data/dropbox/oasis/incremental -mtime -7 | xargs -P 10 -L 1 ~/librarycloud_ingest/util/ingest.sh oasis test
+
+4) Launch 10 additional ingest servers
+
+        aws autoscaling create-launch-configuration --launch-configuration-name "LAUNCH CONFIGURATION NAME" --image-id INGEST_AMI_NAME --key-name "SECURITY_GROUP_KEY_NAME" --security-groups SECURITY_GROUPS --instance-type m3.2xlarge
+
+        aws autoscaling create-auto-scaling-group --availability-zones us-east-1a --auto-scaling-group-name "INGEST_GROUP_NAME" --launch-configuration-name "LAUNCH_CONFIGURATION_NAME" --min-size 10 --max-size 10
+
+5) Monitor SQS queues until all queues except for the "done" and "dead-letter" ones are empty
+
+6) Shut down the additional ingest servers
+
+## Run incremental ingest
+
+1) Login to the Control Server
+
+2) Kickoff aleph ingest - look only at data files less than two days old
+
+        find /data/dropbox/aleph/incremental -mtime -2 | xargs -L 1 ~/librarycloud_ingest/util/ingest.sh aleph test
 
 
 
