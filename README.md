@@ -2,7 +2,7 @@
 
 ## Deploy a control server
 
-1) Setup an AWS server with sufficient disk space to handle files to be loaded into LibraryCloud. A t2.small instance with 100GB of attached storage should be sufficient to start.
+1) Setup an AWS server with sufficient disk space to handle files to be loaded into LibraryCloud. A t2.small instance with 500GB of attached storage should be sufficient to start.
 
 2) Attach the disk, set permissions, and download code
         
@@ -103,6 +103,18 @@ and place it at ```vagrant/secure/aws.properties```
 5) Wait for the ingestion to complete. Monitor progress by reviewing the SQS queues used in the environment (by default, the queues prefixed with ```test-```). When all queues except ```test-done``` and ```test-dead-letter``` are empty, the ingestion is complete.
 
 6) Delete the Auto-Scaling Group to shut down the extra ingestion servers
+
+# Ingest all data
+
+## Preconditions
+Data is available on the control server as follw
+
+Location | Description | Timing
+--- | --- | ---
+/data/dropbox/aleph/full|Full export of all Aleph data|Sunday am|
+/data/dropbox/aleph/incremental|Incremental Aleph updates|Monday 1pm, Wednesday 1pm|
+/data/dropbox/aleph/delete|Records removed from Aleph|Monday 1pm, Wednesday 1pm, Friday midnight|
+/data/dropbox/oasis/incremental|All OASIS files|Friday am|
 
 
 
