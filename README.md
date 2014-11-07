@@ -115,7 +115,7 @@ Location | Description | Timing
 /data/dropbox/aleph/full|Full export of all Aleph data|Sunday am|
 /data/dropbox/aleph/incremental|Incremental Aleph updates|Monday 1pm, Wednesday 1pm|
 /data/dropbox/aleph/delete|Records removed from Aleph|Monday 1pm, Wednesday 1pm, Friday midnight|
-/data/dropbox/oasis/full|All OASIS files|Friday am|
+/data/dropbox/oasis/full|All OASIS files|Friday 7am|
 
 2) There is an AMI with the latest ingest code. If one does not exist, install the latest ingest code on a server, and create an AMI from the Control server:
 
@@ -135,9 +135,9 @@ Location | Description | Timing
 
 4) Launch 10 additional ingest servers
 
-        aws autoscaling create-launch-configuration --launch-configuration-name "LAUNCH CONFIGURATION NAME" --image-id INGEST_AMI_NAME --key-name "SECURITY_GROUP_KEY_NAME" --security-groups SECURITY_GROUPS --instance-type m3.2xlarge
+        aws autoscaling create-launch-configuration --launch-configuration-name LibraryCloudIngest --image-id INGEST_AMI_NAME --key-name "SECURITY_GROUP_KEY_NAME" --security-groups SECURITY_GROUPS --instance-type m3.2xlarge
 
-        aws autoscaling create-auto-scaling-group --availability-zones us-east-1a --auto-scaling-group-name "INGEST_GROUP_NAME" --launch-configuration-name "LAUNCH_CONFIGURATION_NAME" --min-size 10 --max-size 10
+        aws autoscaling create-auto-scaling-group --availability-zones us-east-1a --auto-scaling-group-name LibraryCloudIngestGroup --launch-configuration-name LibraryCloudIngest --min-size 10 --max-size 10
 
 5) Monitor SQS queues until all queues except for the "done" and "dead-letter" ones are empty
 
