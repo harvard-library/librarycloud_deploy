@@ -115,7 +115,8 @@ Location | Description | Timing
 /data/dropbox/aleph/full|Full export of all Aleph data|Sunday am|
 /data/dropbox/aleph/incremental|Incremental Aleph updates|Monday 1pm, Wednesday 1pm|
 /data/dropbox/aleph/delete|Records removed from Aleph|Monday 1pm, Wednesday 1pm, Friday midnight|
-/data/dropbox/oasis/full|All OASIS files|Friday 7am|
+/data/dropbox/oasis/full|All OASIS files|Friday 7:30am|
+/data/dropbox/via/full|All VIA files|Friday 7:30am|
 
 2) There is an AMI with the latest ingest code. If one does not exist, install the latest ingest code on a server, and create an AMI from the Control server:
 
