@@ -132,9 +132,13 @@ Location | Description | Timing
 
 3) Kickoff OASIS ingest - look only at data files less than a week old. Process in parallel (there are many files)
 
-        find /data/dropbox/oasis/incremental -mtime -7 | xargs -P 10 -L 1 ~/librarycloud_ingest/util/ingest.sh oasis test
+        find /data/dropbox/oasis/full -mtime -7 | xargs -P 10 -L 1 ~/librarycloud_ingest/util/ingest.sh oasis test
 
-4) Launch 10 additional ingest servers
+4) Kickoff OASIS ingest - look only at data files less than a week old. Process in parallel (there are many files)
+
+        find /data/dropbox/via/full -mtime -7 | xargs -P 20 -L 1 ~/librarycloud_ingest/util/ingest.sh via test
+
+5) Launch 10 additional ingest servers
 
         aws autoscaling create-launch-configuration --launch-configuration-name LibraryCloudIngest --image-id INGEST_AMI_NAME --key-name "SECURITY_GROUP_KEY_NAME" --security-groups SECURITY_GROUPS --instance-type m3.2xlarge
 
