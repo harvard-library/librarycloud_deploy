@@ -134,9 +134,15 @@ Location | Description | Timing
 
         find /data/dropbox/oasis/full -mtime -7 | xargs -P 10 -L 1 ~/librarycloud_ingest/util/ingest.sh oasis test
 
-4) Kickoff OASIS ingest - look only at data files less than a week old. Process in parallel (there are many files)
+4 - CURRENT) Kickoff VIA ingest. Copy each of the VIA files to an ingest server
 
-        find /data/dropbox/via/full -mtime -7 | xargs -P 20 -L 1 ~/librarycloud_ingest/util/ingest.sh via test
+        scp -i KEY_PATH /data/dropbox/via/full/FILENAME ubuntu*SERVERNAME:/var/lib/librarycloud/files/ingest-via-file
+
+This workaround is required until we implement the logic for reading VIA files from S3, and processing them. Instead, we are dropping them directly onto the ingest server file system. Make sure the ingest server has enough disk space - there should be at least 3x the size of the files being processed
+
+4 - FUTURE) Kickoff VIA ingest - look only at data files less than a week old. 
+
+        find /data/dropbox/via/full -mtime -7 | xargs -L 1 ~/librarycloud_ingest/util/ingest.sh via test
 
 5) Launch 10 additional ingest servers
 
