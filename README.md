@@ -128,11 +128,11 @@ Location | Description | Timing
 
 2) Kickoff aleph ingest - look only at data files less than a week old
 
-        find /data/dropbox/aleph/full -mtime -7 | xargs -L 1 ~/librarycloud_ingest/util/ingest.sh aleph test
+        find /data/dropbox/aleph/full -mtime -7 | xargs -L 1 ~/librarycloud_ingest/util/ingest.sh ingest aleph prod
 
 3) Kickoff OASIS ingest - look only at data files less than a week old. Process in parallel (there are many files)
 
-        find /data/dropbox/oasis/full -mtime -7 | xargs -P 10 -L 1 ~/librarycloud_ingest/util/ingest.sh oasis test
+        find /data/dropbox/oasis/full -mtime -7 | xargs -P 10 -L 1 ~/librarycloud_ingest/util/ingest.sh ingest oasis prod
 
 4 - CURRENT) Kickoff VIA ingest. Copy each of the VIA files to an ingest server
 
@@ -142,7 +142,7 @@ This workaround is required until we implement the logic for reading VIA files f
 
 4 - FUTURE) Kickoff VIA ingest - look only at data files less than a week old. 
 
-        find /data/dropbox/via/full -mtime -7 | xargs -L 1 ~/librarycloud_ingest/util/ingest.sh via test
+        find /data/dropbox/via/full -mtime -7 | xargs -L 1 ~/librarycloud_ingest/util/ingest.sh ingest via prod
 
 5) Launch 10 additional ingest servers
 
@@ -160,7 +160,16 @@ This workaround is required until we implement the logic for reading VIA files f
 
 2) Kickoff aleph ingest - look only at data files less than two days old
 
-        find /data/dropbox/aleph/incremental -mtime -2 | xargs -L 1 ~/librarycloud_ingest/util/ingest.sh aleph test
+        find /data/dropbox/aleph/incremental -mtime -2 | xargs -L 1 ~/librarycloud_ingest/util/ingest.sh ingest aleph prod
+
+## Run delete process
+
+1) Login to the Control Server
+
+2) Kickoff aleph delete processing ingest - look only at data files less than two days old
+
+        find /data/dropbox/aleph/delete/*txt -mtime -2 | xargs -L 1 ~/librarycloud_ingest/util/ingest.sh delete aleph prod
+
 
 
 
